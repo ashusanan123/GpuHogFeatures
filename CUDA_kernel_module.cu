@@ -1,3 +1,12 @@
+/*
+Author: Ashutosh Sanan
+Date: 05/05/2016
+
+The main CUDA kernel to compute the gradient and HOG descriptor
+Contains two distinct kernels for each
+*/
+
+
 #include "cuda.h"
 #include <stdio.h>
 #include "cuda_runtime_api.h"
@@ -17,7 +26,7 @@ extern "C" {
 }
 
 
-// CUDA kernel to calculate the gradient and orientation
+// CUDA kernel to calculate the gradient
 __global__ void gradient_kernel(float* src_ptr, float* dst_ptr, float* theta_ptr, int rows, int cols)
 {
     __shared__ float image[w][w];  // Using shared memory for faster memory access
@@ -264,7 +273,7 @@ extern "C" void gradient_kernel_caller(float* img_h, float* mag_h, float* hog_de
     dim3 threads(bl_size_x, bl_size_y);
     dim3 grid((int)ceil(rows/(float)bl_size_x), (int)ceil(cols/(float)bl_size_y));
     
-    // Calling the kernel to calculate Gradient and Orientation
+    // Calling the kernel to calculate Gradient
     gradient_kernel<<<grid,threads>>>(img_d, mag_d, theta_d, rows, cols);
 
     cudaMemcpy(mag_h, mag_d, rows*cols*sizeof(float), cudaMemcpyDeviceToHost);

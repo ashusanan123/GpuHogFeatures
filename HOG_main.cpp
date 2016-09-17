@@ -1,3 +1,11 @@
+/*
+Author: Ashutosh Sanan
+Date: 05/05/2016
+
+The main function to compute the HOG descriptor and visualize it
+*/
+
+
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -33,7 +41,7 @@ int main()
 
 
     //Reading image from current directory	    
-    Mat img = imread("Car.jpg",0);
+    Mat img = imread("Car.jpg",0);  // Change the image name/path according to use
 
     //Checking if there is data in the image
     if(!img.data)
